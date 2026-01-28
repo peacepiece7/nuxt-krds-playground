@@ -1,10 +1,10 @@
 <script setup lang="ts">
   const searchQuery = ref('')
 
-  const recommendedKeywords = ['스포츠', '마포', '수영']
+  const recommendedKeywords = ['������', '����', '����']
 
   const handleSearch = () => {
-    // 검색 로직
+    // �˻� ����
     console.log('Search:', searchQuery.value)
   }
 
@@ -15,35 +15,27 @@
 </script>
 
 <template>
-  <v-card
+  <Card
     class="border-grey-200 w-full min-w-[340px] border-2 bg-white shadow-[var(--shadow-base)] transition-shadow hover:shadow-[var(--shadow-md)]"
-    elevation="2"
   >
-    <v-card-title
-      class="border-grey-300 border-b-2 bg-white px-6 py-4 text-lg font-bold"
-    >
-      통합검색
-    </v-card-title>
+    <CardHeader class="border-grey-300 border-b-2 bg-white px-6 py-4">
+      <CardTitle class="text-lg font-bold">���հ˻�</CardTitle>
+    </CardHeader>
 
-    <v-card-text class="flex flex-col gap-4 bg-white p-6">
-      <v-text-field
-        v-model="searchQuery"
-        label="검색어를 입력하세요"
-        variant="outlined"
-        class="pp-v-field text-field-size-lg"
-        @keyup.enter="handleSearch"
-      >
-        <template #append-inner>
-          <v-icon
-            class="hover:text-new-blue-700 cursor-pointer text-[1.5rem] transition-colors"
-            @click="handleSearch"
-            >local:search</v-icon
-          >
-        </template>
-      </v-text-field>
+    <CardBody class="flex flex-col gap-4 bg-white p-6">
+      <div class="flex items-end gap-2">
+        <TextField
+          :model-value="searchQuery"
+          label="�˻�� �Է��ϼ���"
+          @update:model-value="(v) => (searchQuery = v)"
+          @keyup.enter="handleSearch"
+          class="flex-1"
+        />
+        <Button type="button" variant="outlined" color="primary" @click="handleSearch">�˻�</Button>
+      </div>
 
       <div class="flex flex-wrap items-center gap-2 text-sm">
-        <span class="text-grey-600 whitespace-nowrap">추천검색어:</span>
+        <span class="text-grey-600 whitespace-nowrap">��õ�˻���:</span>
         <div class="flex flex-wrap gap-2">
           <button
             v-for="keyword in recommendedKeywords"
@@ -55,6 +47,6 @@
           </button>
         </div>
       </div>
-    </v-card-text>
-  </v-card>
+    </CardBody>
+  </Card>
 </template>

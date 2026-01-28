@@ -2,11 +2,6 @@
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/yup'
   import * as yup from 'yup'
-  import FormField from '~/components/molecules/FormField.vue'
-  import TextField from '~/components/atoms/TextField.vue'
-  import DatePicker from '~/components/atoms/DatePicker.vue'
-  import Textarea from '~/components/atoms/Textarea.vue'
-  import NumberInput from '~/components/atoms/NumberInput.vue'
   import SelectionGroup, {
     type GroupOption,
   } from '~/components/atoms/SelectionGroup.vue'
@@ -82,14 +77,14 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-grey-50 p-8">
+  <div class="bg-grey-50 min-h-screen p-8">
     <div class="mx-auto max-w-2xl">
-      <h1 class="mb-8 text-3xl font-bold text-grey-900">
+      <h1 class="text-grey-900 mb-8 text-3xl font-bold">
         FormField + useForm + Yup 예제
       </h1>
 
       <section
-        class="min-h-[420px] rounded-3xl border border-grey-300 bg-white p-10"
+        class="border-grey-300 min-h-[420px] rounded-3xl border bg-white p-10"
       >
         <h2 class="m-0 mb-6 text-2xl font-bold">법인 정보 입력</h2>
 
@@ -200,7 +195,7 @@
             </button>
             <button
               type="button"
-              class="rounded-lg border border-grey-300 bg-white px-6 py-3 font-semibold text-grey-700 transition-colors hover:bg-grey-50"
+              class="border-grey-300 text-grey-700 hover:bg-grey-50 rounded-lg border bg-white px-6 py-3 font-semibold transition-colors"
               @click="onReset"
             >
               초기화
@@ -209,11 +204,11 @@
         </form>
 
         <!-- 디버깅용: 현재 폼 값 표시 -->
-        <div class="mt-8 rounded-lg bg-grey-100 p-4">
-          <h3 class="mb-2 text-sm font-semibold text-grey-700">
+        <div class="bg-grey-100 mt-8 rounded-lg p-4">
+          <h3 class="text-grey-700 mb-2 text-sm font-semibold">
             현재 폼 값 (디버깅용):
           </h3>
-          <pre class="text-xs text-grey-600">{{
+          <pre class="text-grey-600 text-xs">{{
             JSON.stringify(values, null, 2)
           }}</pre>
         </div>

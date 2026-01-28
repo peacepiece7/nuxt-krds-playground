@@ -20,7 +20,7 @@
         <p class="text-grey-700 mb-2 text-sm font-semibold">Size</p>
         <div class="flex flex-wrap items-center gap-2">
           <Button size="icon">
-            <v-icon>mdi-heart</v-icon>
+            <IcIcon icon="star-filled" />
           </Button>
           <Button size="xs">XS</Button>
           <Button size="sm">SM</Button>
@@ -91,7 +91,7 @@
           <Button shape="soft">Soft</Button>
           <Button shape="rounded">Rounded</Button>
           <Button shape="circle">
-            <v-icon>mdi-heart</v-icon>
+            <IcIcon icon="star-filled" />
           </Button>
         </div>
       </div>
@@ -110,11 +110,11 @@
         <p class="text-grey-700 mb-2 text-sm font-semibold">With Icons</p>
         <div class="flex flex-wrap items-center gap-2">
           <Button>
-            <v-icon>mdi-plus</v-icon>
+            <IcIcon icon="plus" />
             Add
           </Button>
           <Button variant="outlined">
-            <v-icon>mdi-delete</v-icon>
+            <IcIcon icon="close" />
             Delete
           </Button>
         </div>
@@ -130,7 +130,7 @@
       </div>
 
       <!-- Color Combinations -->
-      <p>Inverse는 내부 컨텐츠 색상을 정의해서 사용하세요</p>
+      <p>Inverse???��? 컨텐�??�상???�의?�서 ?�용?�세??/p>
       <div>
         <p class="text-grey-700 mb-2 text-sm font-semibold">
           Color Combinations (Outlined)
@@ -143,10 +143,11 @@
           <Button variant="outlined" color="success">Success</Button>
           <Button variant="outlined" color="muted">Muted</Button>
           <Button variant="outlined" size="icon" color="inverse" shape="circle">
-            <v-icon icon="mdi-heart" class="text-red-500" />
+            <IcIcon icon="star-filled" class="text-red-500" />
           </Button>
         </div>
       </div>
     </div>
   </section>
 </template>
+

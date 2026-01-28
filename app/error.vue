@@ -19,16 +19,20 @@
 
 <template>
   <NuxtLayout>
-    <v-container class="fill-height">
-      <v-row align="center" justify="center">
-        <v-col cols="12" class="text-center">
-          <h1 class="text-h3 mb-4">
-            {{ is404 ? '페이지를 찾을 수 없습니다' : '오류가 발생했습니다' }}
-          </h1>
-          <p class="text-body-1 mb-4">요청하신 페이지를 찾을 수 없습니다.</p>
-          <v-btn color="primary" @click="handleError">홈으로 돌아가기</v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
+    <Container class="flex min-h-[60vh] items-center justify-center">
+      <div class="w-full text-center">
+        <h1 class="text-h3 mb-4">
+          {{
+            is404
+              ? 'The page you are looking for does not exist.'
+              : 'An error occurred'
+          }}
+        </h1>
+        <p class="text-body-1 mb-4">
+          The page you are looking for does not exist.
+        </p>
+        <Button @click="handleError">Go to home</Button>
+      </div>
+    </Container>
   </NuxtLayout>
 </template>

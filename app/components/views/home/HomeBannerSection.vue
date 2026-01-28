@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { CarouselItem } from '~/components/organisms/Carousel.vue'
+  import type { CarouselItem } from '~/components/organisms/_Carousel.vue'
 
   // 캐러셀 이미지 데이터
   const carouselItems: CarouselItem[] = [
@@ -22,7 +22,7 @@
 
 <template>
   <div
-    class="relative overflow-hidden -mt-[65px] mb-[-65px]"
+    class="relative -mt-[65px] mb-[-65px] overflow-hidden"
     style="
       width: 100%;
       height: calc(100vh + 65px);
@@ -38,7 +38,7 @@
     />
 
     <div
-      class="py-8 px-4"
+      class="px-4 py-8"
       style="
         position: absolute;
         inset: 0;

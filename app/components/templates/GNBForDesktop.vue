@@ -9,7 +9,6 @@
 
   const props = defineProps<Props>()
 
-  // Desktop용 상태
   const hoveredMenuIndex = ref<number | null>(null)
 
   const selectedMenu = computed(() => {
@@ -17,7 +16,6 @@
     return props.menuItems[hoveredMenuIndex.value]
   })
 
-  // 하위 메뉴가 열려있는지 확인
   const isSubmenuOpen = computed(() => {
     return (
       selectedMenu.value !== null &&
@@ -28,15 +26,7 @@
     )
   })
 
-  // GNB 배경색 결정 (우선순위: 하위 메뉴 열림 > 스크롤 위치)
-  const shouldBeTransparent = computed(() => {
-    // 하위 메뉴가 열려있으면 항상 초록색 (투명하지 않음)
-    if (isSubmenuOpen.value) {
-      return false
-    }
-    // 하위 메뉴가 닫혀있고 스크롤이 최상단이면 투명
-    return props.isAtTop
-  })
+  // 투명 배경 로직 제거 - 항상 배경색 표시
 
   const handleMouseEnter = (index: number) => {
     hoveredMenuIndex.value = index
@@ -50,7 +40,6 @@
     hoveredMenuIndex.value = null
   }
 
-  // 라우트 변경 감지
   const route = useRoute()
 
   watch(
@@ -60,7 +49,6 @@
     },
   )
 
-  // 로그인 상태 확인
   const authStore = useAuthStore()
   const isLoggedIn = computed(() => authStore.isLoggedIn)
   const userName = computed(() => authStore.user?.name || '')
@@ -69,7 +57,6 @@
     navigateTo('/mypage')
   }
 
-  // 로그인 다이얼로그 상태
   const isLoginDialogOpen = ref(false)
 
   const handleLoginLogout = () => {
@@ -87,39 +74,27 @@
 
 <template>
   <div class="w-full">
-    <v-app-bar
-      :color="shouldBeTransparent ? 'transparent' : 'primary'"
-      :elevation="shouldBeTransparent ? 0 : 2"
-      class="relative w-full transition-[transform,background-color,box-shadow] duration-300 ease-in-out will-change-transform"
-      :class="{
-        'border-b border-white/30 !bg-transparent': shouldBeTransparent,
-      }"
-      app
+    <header
+      class="bg-krds-primary-50 relative w-full shadow-sm transition-[transform,background-color,box-shadow] duration-300 ease-in-out will-change-transform"
       :style="{
         transform: visible ? 'translateY(0)' : 'translateY(-100%)',
       }"
     >
       <div
         class="mx-auto flex w-full max-w-[1400px] items-center overflow-visible p-0"
-        :class="{
-          '!bg-transparent': shouldBeTransparent,
-        }"
       >
-        <!-- 왼쪽: 로고 + 텍스트 + 메뉴 버튼들 -->
         <div class="flex items-center gap-4 pl-4">
-          <!-- 로고 + 타이틀 (클릭 시 홈으로 이동) -->
           <NuxtLink
             :prefetch="false"
             to="/"
             class="flex cursor-pointer items-center no-underline transition-opacity duration-200 ease-in hover:opacity-80"
           >
-            <v-icon class="shrink-0 text-white" size="40">mdi-trophy</v-icon>
-            <span class="hidden text-xl font-bold text-white md:flex">
-              스포츠클럽포털
+            <!-- <IcIcon icon="star-filled" class="shrink-0 text-krds-primary-90" /> -->
+            <span class="text-krds-primary-90 hidden text-xl font-bold md:flex">
+              Sports Club
             </span>
           </NuxtLink>
 
-          <!-- 메뉴 버튼들 -->
           <div class="relative ml-4 flex items-center gap-2">
             <div
               v-for="(item, index) in menuItems"
@@ -129,7 +104,7 @@
             >
               <NuxtLink
                 :prefetch="false"
-                class="relative inline-block px-3 py-2 font-medium text-white! no-underline transition-colors duration-200 ease-in"
+                class="text-krds-primary-90 relative inline-block px-3 py-2 font-medium no-underline transition-colors duration-200 ease-in"
                 :class="{ 'gnb-menu-link-active': hoveredMenuIndex === index }"
                 :to="item.to"
               >
@@ -139,43 +114,36 @@
           </div>
         </div>
 
-        <v-spacer />
-
-        <!-- 우측: 알람 아이콘, 사용자 정보(로그인 시), 로그인/로그아웃 -->
-        <ClientOnly>
-          <div class="flex items-center gap-2">
-            <Button variant="outlined" color="inverse">
-              <v-icon>mdi-bell-outline</v-icon>
-            </Button>
-            <template v-if="isLoggedIn">
-              <span
-                class="px-2 py-0 text-sm font-medium whitespace-nowrap text-white"
-                >{{ userName }}</span
-              >
-              <Button variant="outlined" color="inverse" @click="goToMyPage">
-                <v-icon>mdi-account-circle</v-icon>
+        <div class="ml-auto flex items-center gap-2">
+          <ClientOnly>
+            <div class="flex items-center gap-2">
+              <Button>
+                <IcIcon icon="announcement" />
               </Button>
-            </template>
-            <Button
-              variant="outlined"
-              color="inverse"
-              @click="handleLoginLogout"
-            >
-              {{ isLoggedIn ? '로그아웃' : '로그인' }}
-            </Button>
-          </div>
-        </ClientOnly>
+              <template v-if="isLoggedIn">
+                <span
+                  class="text-krds-primary-90 px-2 py-0 text-sm font-medium whitespace-nowrap"
+                  >{{ userName }}</span
+                >
+                <Button @click="goToMyPage">
+                  <IcIcon icon="login-v1" />
+                </Button>
+              </template>
+              <Button @click="handleLoginLogout">
+                {{ isLoggedIn ? 'Logout' : 'Login' }}
+              </Button>
+            </div>
+          </ClientOnly>
+        </div>
       </div>
-    </v-app-bar>
+    </header>
 
-    <!-- 로그인 다이얼로그 -->
-    <Dialog v-model="isLoginDialogOpen" :max-width="500">
+    <Dialog v-model="isLoginDialogOpen">
       <template #content>
         <LoginSection @login-success="handleLoginSuccess" />
       </template>
     </Dialog>
 
-    <!-- 하위 메뉴 영역 -->
     <div
       v-if="
         selectedMenu &&
@@ -193,7 +161,7 @@
           <div class="flex h-[250px] w-[250px] items-center justify-center">
             <NuxtImg
               src="/dali_hi.png"
-              alt="달리 캐릭터"
+              alt="Hello Dali"
               class="h-full w-full object-contain"
             />
           </div>
@@ -225,21 +193,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  /* v-app-bar와 v-app-bar__content의 transition 및 overflow 처리 */
-  :deep(.v-app-bar) {
-    transition:
-      transform 0.3s ease-in-out,
-      background-color 0.3s ease-in-out,
-      box-shadow 0.3s ease-in-out !important;
-  }
-
-  :deep(.v-app-bar__content) {
-    overflow: visible !important;
-    transition:
-      transform 0.3s ease-in-out,
-      background-color 0.3s ease-in-out,
-      box-shadow 0.3s ease-in-out !important;
-  }
-</style>

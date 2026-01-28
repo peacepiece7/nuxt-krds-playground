@@ -9,7 +9,6 @@
   import PubAtomStep5 from '~/components/views/pub/atom/inputs/PubAtomInputStep5.vue'
   import PubAtomStep6 from '~/components/views/pub/atom/inputs/PubAtomInputStep6.vue'
   import PubAtomStep7 from '~/components/views/pub/atom/inputs/PubAtomInputStep7.vue'
-  import PubAtomStep8 from '~/components/views/pub/atom/inputs/PubAtomInputStep8.vue'
 
   definePageMeta({
     middleware: 'pub-init',
@@ -35,7 +34,6 @@
     { step: 5, title: 'Select' },
     { step: 6, title: 'Divider' },
     { step: 7, title: 'Selection' },
-    { step: 8, title: 'Composite' },
   ]
 
   const WINDOW_STEPS: WindowStep[] = STEPS.map((s) => ({
@@ -51,7 +49,6 @@
     PubAtomStep5,
     PubAtomStep6,
     PubAtomStep7,
-    PubAtomStep8,
   ] as const
 
   const currentStep = computed(() => STEPS[pubGuideStore.currentIndex])

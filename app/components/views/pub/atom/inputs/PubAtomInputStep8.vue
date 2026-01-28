@@ -3,7 +3,6 @@
   import type { IDNumberValue } from '~/components/molecules/IDNumberInput.vue'
   import PhoneNumberInput from '~/components/molecules/PhoneNumberInput.vue'
   import IDNumberInput from '~/components/molecules/IDNumberInput.vue'
-  import FormField from '~/components/molecules/FormField.vue'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/yup'
   import * as yup from 'yup'

@@ -12,7 +12,7 @@
   const authStore = useAuthStore()
 
   // 디바이스 감지
-  const { isDesktop } = useDevice()
+  const { isDesktop, isMobile } = useDevice()
 
   // 스크롤 추적
   const { scrollY, scrollDirection } = useTracker()
@@ -35,19 +35,6 @@
         { title: 'organisms', to: '/pub/organisms' },
       ],
     },
-    {
-      title: '스포츠클럽 정보',
-      to: '/info',
-      children: [
-        { title: '등록 스포츠클럽', to: '/info/registered-sports-club' },
-      ],
-    },
-
-    {
-      title: '스포츠클럽 커뮤니티',
-      to: '/community',
-      children: [{ title: '게시판', to: '/community/board' }],
-    },
   ]
 
   const menuItems = computed<MenuItem[]>(() => {
@@ -55,34 +42,30 @@
 
     if (isLoggedIn.value) {
       // "스포츠클럽 정보" 뒤에 "신청" 메뉴 삽입
-      const insertIndex = items.findIndex((i) => i.to === '/info')
-      const applyMenu: MenuItem = {
-        title: '스포츠클럽 신청',
-        to: '/apply',
-        children: [
-          {
-            title: '등록 스포츠클럽 신청',
-            to: '/apply/registered-sports-club',
-          },
-        ],
-      }
-
-      if (insertIndex >= 0) {
-        items.splice(insertIndex + 1, 0, applyMenu)
-      } else {
-        items.push(applyMenu)
-      }
+      // const insertIndex = items.findIndex((i) => i.to === '/info')
+      // const applyMenu: MenuItem = {
+      //   title: '스포츠클럽 신청',
+      //   to: '/apply',
+      //   children: [
+      //     {
+      //       title: '등록 스포츠클럽 신청',
+      //       to: '/apply/registered-sports-club',
+      //     },
+      //   ],
+      // }
+      // if (insertIndex >= 0) {
+      //   items.splice(insertIndex + 1, 0, applyMenu)
+      // } else {
+      //   items.push(applyMenu)
+      // }
     }
 
     return items
   })
 
-  // GNB 표시 여부 계산
+  // GNB 표시 여부 계산 - 항상 표시
   const isVisible = computed(() => {
-    if (!isMounted.value) return true
-    if (scrollY.value < GNB_TRIGGER_HEIGHT) return true
-    if (scrollDirection.value === null) return true
-    return scrollDirection.value === 'up'
+    return true
   })
 
   // 스크롤이 최상단인지 확인
@@ -93,10 +76,7 @@
 </script>
 
 <template>
-  <div
-    class="fixed top-0 left-0 z-1000 w-full translate-y-0 transition-transform duration-200 ease-in-out"
-    :class="{ '-translate-y-full': !isVisible }"
-  >
+  <div class="fixed top-0 left-0 z-1000 w-full">
     <GNBForDesktop
       v-if="isDesktop"
       :menu-items="menuItems"
@@ -104,7 +84,7 @@
       :is-at-top="isAtTop"
     />
     <GNBForMobile
-      v-else
+      v-else-if="isMobile"
       :menu-items="menuItems"
       :visible="isVisible"
       :is-at-top="isAtTop"

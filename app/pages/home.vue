@@ -26,7 +26,7 @@
   <div>
     <div class="relative w-full">
       <!-- 배너 섹션 (viewport 100% width, height) -->
-      <HomeBannerSection />
+      <!-- <HomeBannerSection /> -->
 
       <!-- <HomePictogramBackground /> -->
 

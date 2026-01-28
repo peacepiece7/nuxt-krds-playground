@@ -2,15 +2,9 @@
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/yup'
   import * as yup from 'yup'
-  import FormField from '~/components/molecules/FormField.vue'
-  import TextField from '~/components/atoms/TextField.vue'
-  import DatePicker from '~/components/atoms/DatePicker.vue'
-  import Textarea from '~/components/atoms/Textarea.vue'
-  import NumberInput from '~/components/atoms/NumberInput.vue'
   import SelectionGroup, {
     type GroupOption,
   } from '~/components/atoms/SelectionGroup.vue'
-  import SelectV2 from '~/components/atoms/SelectV2.vue'
 
   const businessTypeOptions: GroupOption<string>[] = [
     { label: '개인사업자', value: 'individual' },

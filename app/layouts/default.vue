@@ -16,21 +16,17 @@
     }
   })
 
-  onMounted(() => {
-    console.log('default layout mounted')
-  })
-
   useHead(pageMeta)
 </script>
 
 <template>
-  <v-app>
+  <div class="flex min-h-screen flex-col">
     <GNB />
-    <v-main>
+    <main class="flex-1">
       <slot />
-    </v-main>
+    </main>
     <Footer />
-  </v-app>
+  </div>
 </template>
 
 <style></style>

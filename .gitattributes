@@ -1,6 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Ensure Vue files are treated as UTF-8
+*.vue text eol=lf working-tree-encoding=UTF-8
+
 # Treat generated/media assets as binary (no LF normalization)
 public/** -text
 app/assets/lottie/** -text

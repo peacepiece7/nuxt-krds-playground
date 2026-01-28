@@ -1,5 +1,6 @@
 <script setup lang="ts">
-  // Skeleton UI for CKEditor loading state using Vuetify
+  import Skeleton from '~/components/hanui/Skeleton.vue'
+  import Spinner from '~/components/hanui/Spinner.vue'
 </script>
 
 <template>
@@ -13,7 +14,6 @@
       overflow: hidden;
     "
   >
-    <!-- Toolbar Skeleton -->
     <div
       class="border-b border-grey-300"
       style="
@@ -24,17 +24,10 @@
       "
     >
       <template v-for="i in 7" :key="i">
-        <v-skeleton-loader
-          type="button"
-          width="5rem"
-          height="5rem"
-          class=""
-          style="flex-shrink: 0"
-        />
+        <Skeleton variant="rounded" width="5rem" height="5rem" style="flex-shrink: 0" />
       </template>
     </div>
 
-    <!-- Content Skeleton -->
     <div
       class="p-4"
       style="
@@ -44,15 +37,14 @@
         background: #ffffff;
       "
     >
-      <v-skeleton-loader type="text" width="100%" height="2rem" />
-      <v-skeleton-loader type="text" width="100%" height="2rem" />
-      <v-skeleton-loader type="text" width="60%" height="2rem" />
-      <v-skeleton-loader type="text" width="100%" height="2rem" />
-      <v-skeleton-loader type="text" width="100%" height="2rem" />
-      <v-skeleton-loader type="text" width="60%" height="2rem" />
+      <Skeleton variant="text" width="100%" height="2rem" />
+      <Skeleton variant="text" width="100%" height="2rem" />
+      <Skeleton variant="text" width="60%" height="2rem" />
+      <Skeleton variant="text" width="100%" height="2rem" />
+      <Skeleton variant="text" width="100%" height="2rem" />
+      <Skeleton variant="text" width="60%" height="2rem" />
     </div>
 
-    <!-- Loading Message -->
     <div
       class="text-grey-900 font-medium"
       style="
@@ -65,13 +57,7 @@
         gap: 8px;
       "
     >
-      <v-progress-circular
-        indeterminate
-        size="16"
-        width="2"
-        color="grey"
-        class="mr-2"
-      />
+      <Spinner size="sm" variant="secondary" class="mr-2" />
       <span>에디터를 불러오는 중입니다...</span>
     </div>
   </div>

@@ -1,14 +1,13 @@
 <script setup lang="ts">
-  import type { VDialog } from 'vuetify/components'
-
-  type VDialogProps = VDialog['$props']
+  import { computed } from 'vue'
+  import HanuiModal from '~/components/hanui/Modal.vue'
 
   export interface DialogProps {
     modelValue: boolean
-    maxWidth?: VDialogProps['maxWidth']
-    scrollable?: VDialogProps['scrollable']
-    persistent?: VDialogProps['persistent']
-    fullscreen?: VDialogProps['fullscreen']
+    maxWidth?: string | number
+    scrollable?: boolean
+    persistent?: boolean
+    fullscreen?: boolean
   }
 
   const props = withDefaults(defineProps<DialogProps>(), {
@@ -29,53 +28,25 @@
 
   const closeDialog = () => (isOpen.value = false)
 
-  // body scroll lock
-  watch(
-    () => isOpen.value,
-    (open) => {
-      if (import.meta.client) {
-        document.body.classList.toggle('dialog-open', open)
-      }
-    },
-  )
-
-  onBeforeUnmount(() => {
-    if (import.meta.client) {
-      document.body.classList.remove('dialog-open')
+  const modalSize = computed<'sm' | 'md' | 'lg' | 'xl' | 'full'>(() => {
+    if (props.fullscreen) return 'full'
+    const width = Number(props.maxWidth)
+    if (!Number.isNaN(width)) {
+      if (width >= 1200) return 'xl'
+      if (width >= 900) return 'lg'
+      if (width >= 600) return 'md'
+      return 'sm'
     }
-  })
-
-  const dialogProps = computed(() => {
-    const {
-      modelValue,
-      maxWidth,
-      scrollable,
-      persistent,
-      fullscreen,
-      ...rest
-    } = props
-    return {
-      maxWidth,
-      scrollable,
-      persistent,
-      fullscreen,
-      ...rest,
-    }
+    return 'lg'
   })
 </script>
 
 <template>
-  <v-dialog v-model="isOpen" v-bind="dialogProps">
-    <v-card class="dialog">
-      <!-- Title -->
-      <v-card-title
+  <HanuiModal :open="isOpen" :size="modalSize" @update:open="isOpen = $event">
+    <div class="dialog">
+      <div
         v-if="$slots.title || $slots['close-icon']"
-        class="border-grey-300 flex items-center justify-between border-b"
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
+        class="border-grey-300 flex items-center justify-between border-b pb-4"
       >
         <div class="dialog__title-content flex flex-1 items-center gap-2">
           <slot name="title" />
@@ -83,36 +54,25 @@
 
         <div>
           <slot name="close-icon" :close="closeDialog">
-            <!-- default close button -->
-            <Button
-              color="inverse"
-              size="xs"
-              variant="fill"
-              @click="closeDialog"
-            >
+            <Button color="inverse" size="xs" @click="closeDialog">
               <IcIcon icon="close" />
             </Button>
           </slot>
         </div>
-      </v-card-title>
+      </div>
 
-      <!-- Content -->
-      <v-card-text
-        class="gap-6 p-6"
-        style="display: flex; flex-direction: column"
-      >
+      <div class="flex flex-col gap-6">
         <slot name="content" />
-      </v-card-text>
+      </div>
 
-      <!-- Footer -->
-      <v-card-actions
+      <div
         v-if="$slots.footer"
-        class="dialog__footer border-grey-200 border-t"
+        class="dialog__footer border-grey-200 border-t pt-4"
       >
         <slot name="footer" :close="closeDialog" />
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+      </div>
+    </div>
+  </HanuiModal>
 </template>
 
 <style scoped>

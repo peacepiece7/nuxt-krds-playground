@@ -1,5 +1,3 @@
-import vuetify from 'vite-plugin-vuetify'
-
 export default defineNuxtConfig({
   /* --------------------------------------------------
    * Core / Versioning
@@ -36,18 +34,7 @@ export default defineNuxtConfig({
    * Build & Vite
    * -------------------------------------------------- */
   build: {
-    transpile: ['@ckeditor/ckeditor5-vue', 'vuetify', '@vuepic/vue-datepicker'],
-  },
-
-  vite: {
-    plugins: [
-      vuetify({
-        autoImport: {
-          labs: true,
-          ignore: [],
-        },
-      }),
-    ],
+    transpile: ['@ckeditor/ckeditor5-vue', '@vuepic/vue-datepicker'],
   },
 
   /* --------------------------------------------------
@@ -110,22 +97,12 @@ export default defineNuxtConfig({
     ],
   },
 
-  imports: {
-    presets: [
-      {
-        from: 'vuetify',
-        imports: ['useDisplay', 'useTheme', 'useLocale'],
-      },
-    ],
-  },
-
   /* --------------------------------------------------
    * Styles
    * plugin에 css 직접 추가하면 tree shaking 안됨 주의!
    * -------------------------------------------------- */
   css: [
     '@/assets/css/main.css',
-    '@/assets/css/vuetify/main.css',
     '@vuepic/vue-datepicker/dist/main.css',
   ],
 

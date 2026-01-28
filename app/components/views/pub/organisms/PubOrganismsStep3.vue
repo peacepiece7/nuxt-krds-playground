@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { DataTableHeader } from '~/components/molecules/Table.vue'
   import Table from '~/components/molecules/Table.vue'
-  import Pagination from '~/components/molecules/Pagination.vue'
+  import Pagination from '~/components/molecules/_Pagination.vue'
 
   // 테이블 헤더 정의
   const headers: DataTableHeader[] = [

@@ -19,6 +19,7 @@ export default withNuxt(
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/unified-signatures': 'off',
       'vue/html-self-closing': 'off',
       'vue/no-unused-vars': 'warn',
     },

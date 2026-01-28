@@ -1,92 +1,97 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { ChevronDown, Check } from 'lucide-vue-next';
-import { cn } from '@/lib/utils';
+  import { computed, ref } from 'vue'
+  import { ChevronDown, Check } from 'lucide-vue-next'
+  import { cn } from '@/lib/utils'
 
-export interface SelectOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
-
-const props = withDefaults(
-  defineProps<{
-    options: SelectOption[];
-    modelValue?: string;
-    placeholder?: string;
-    disabled?: boolean;
-    status?: 'error' | 'success' | 'info';
-    size?: 'lg' | 'md' | 'sm';
-    label?: string;
-    class?: string;
-  }>(),
-  {
-    placeholder: '선택하세요',
-    disabled: false,
-    size: 'lg',
+  export interface SelectOption {
+    value: string
+    label: string
+    disabled?: boolean
   }
-);
 
-const emit = defineEmits<{
-  'update:modelValue': [value: string];
-}>();
-
-const isOpen = ref(false);
-
-const sizeClasses = {
-  lg: 'h-14',
-  md: 'h-12',
-  sm: 'h-10',
-} as const;
-
-const selectedOption = computed(() => props.options.find((opt) => opt.value === props.modelValue));
-
-const hasError = computed(() => props.status === 'error');
-
-const triggerClasses = computed(() =>
-  cn(
-    'flex w-full items-center justify-between rounded-md border bg-krds-white pl-4 pr-12 py-2 text-krds-body-lg leading-[150%] shadow-sm transition-colors relative',
-    sizeClasses[props.size],
-    'focus:outline-none focus:ring-2 focus:ring-krds-primary-60 focus:ring-offset-2',
-    hasError.value
-      ? 'border-krds-danger-60 focus:ring-krds-danger-60'
-      : 'border-krds-gray-60 hover:border-krds-gray-40',
-    props.disabled && 'cursor-not-allowed bg-krds-gray-5 text-krds-gray-40'
+  const props = withDefaults(
+    defineProps<{
+      options: SelectOption[]
+      modelValue?: string
+      placeholder?: string
+      disabled?: boolean
+      status?: 'error' | 'success' | 'info'
+      size?: 'lg' | 'md' | 'sm'
+      label?: string
+      class?: string
+    }>(),
+    {
+      placeholder: '선택하세요',
+      disabled: false,
+      size: 'lg',
+    },
   )
-);
 
-const dropdownClasses = computed(() =>
-  cn(
-    'absolute z-50 max-h-96 min-w-[8rem] w-full overflow-hidden rounded-md border bg-krds-white text-krds-body-md leading-[150%] shadow-md mt-1',
-    'animate-in fade-in-0 zoom-in-95'
+  const emit = defineEmits<{
+    'update:modelValue': [value: string]
+  }>()
+
+  const isOpen = ref(false)
+
+  const sizeClasses = {
+    lg: 'h-14',
+    md: 'h-12',
+    sm: 'h-10',
+  } as const
+
+  const selectedOption = computed(() =>
+    props.options.find((opt) => opt.value === props.modelValue),
   )
-);
 
-const handleSelect = (option: SelectOption) => {
-  if (option.disabled) return;
-  emit('update:modelValue', option.value);
-  isOpen.value = false;
-};
+  const hasError = computed(() => props.status === 'error')
 
-const handleKeyDown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape') {
-    isOpen.value = false;
-  } else if (e.key === 'Enter' || e.key === ' ') {
-    isOpen.value = !isOpen.value;
+  const triggerClasses = computed(() =>
+    cn(
+      'flex w-full items-center justify-between rounded-md border bg-krds-white pl-4 pr-12 py-2 text-krds-body-lg leading-[150%] shadow-sm transition-colors relative',
+      sizeClasses[props.size],
+      'focus:outline-none focus:ring-2 focus:ring-krds-primary-60 focus:ring-offset-2',
+      hasError.value
+        ? 'border-krds-danger-60 focus:ring-krds-danger-60'
+        : 'border-krds-gray-60 hover:border-krds-gray-40',
+      props.disabled && 'cursor-not-allowed bg-krds-gray-5 text-krds-gray-40',
+    ),
+  )
+
+  const dropdownClasses = computed(() =>
+    cn(
+      'absolute z-50 max-h-96 min-w-[8rem] w-full overflow-hidden rounded-md border bg-krds-white text-krds-body-md leading-[150%] shadow-md mt-1',
+      'animate-in fade-in-0 zoom-in-95',
+    ),
+  )
+
+  const handleSelect = (option: SelectOption) => {
+    if (option.disabled) return
+    emit('update:modelValue', option.value)
+    isOpen.value = false
   }
-};
 
-const handleClickOutside = () => {
-  isOpen.value = false;
-};
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      isOpen.value = false
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      isOpen.value = !isOpen.value
+    }
+  }
+
+  const handleClickOutside = () => {
+    isOpen.value = false
+  }
 </script>
 
 <template>
-  <div :class="cn('relative', props.class)" v-click-outside="handleClickOutside">
+  <div
+    v-click-outside="handleClickOutside"
+    :class="cn('relative', props.class)"
+  >
     <!-- Label -->
     <label
       v-if="label"
-      class="block text-krds-body-sm leading-[150%] font-medium text-krds-gray-70 mb-1"
+      class="text-krds-body-sm text-krds-gray-70 mb-1 block leading-[150%] font-medium"
     >
       {{ label }}
     </label>
@@ -105,7 +110,7 @@ const handleClickOutside = () => {
         {{ selectedOption?.label || placeholder }}
       </span>
       <ChevronDown
-        class="h-6 w-6 absolute right-4 top-1/2 -translate-y-1/2 transition-transform"
+        class="pointer-events-none absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 transition-transform"
         :class="isOpen && 'rotate-180'"
       />
     </button>
@@ -126,10 +131,10 @@ const handleClickOutside = () => {
             :key="option.value"
             :class="
               cn(
-                'relative flex cursor-pointer select-none items-center rounded-sm py-2 pl-8 pr-2 outline-none',
+                'relative flex cursor-pointer items-center rounded-sm py-2 pr-2 pl-8 outline-none select-none',
                 'hover:bg-krds-primary-60 hover:text-krds-white',
                 option.disabled && 'pointer-events-none opacity-50',
-                option.value === modelValue && 'bg-krds-primary-5'
+                option.value === modelValue && 'bg-krds-primary-5',
               )
             "
             role="option"
