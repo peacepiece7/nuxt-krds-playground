@@ -1,0 +1,36 @@
+{
+  // https://nuxt.com/blog/eslint-module
+  // Enable the ESlint flat config support
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never",
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+
+  // ignore arbitrary class name warning. because of duplicated class sort policy for prettier tailwindcss plugin
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "search.exclude": {
+    "**/_pgbackup": true,
+    ".nuxt": true,
+    ".output": true,
+    "dist": true,
+    ".unlighthouse": true
+  }
+}
